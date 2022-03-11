@@ -12,8 +12,7 @@ const saltRounds = 10;
 const User = require('../models/User.model');
 
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
-const isLoggedOut = require('../middleware/isLoggedOut');
-const isLoggedIn = require('../middleware/isLoggedIn');
+
 const { isAuthenticated } = require('../middleware/jwt.middleware');
 
 router.get('/verify', isAuthenticated, (req, res, next) => {
@@ -22,7 +21,7 @@ router.get('/verify', isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
 });
 
-router.post('/signup', isLoggedOut, (req, res) => {
+router.post('/signup', (req, res) => {
   const { username, password } = req.body;
 
   if (!username) {
@@ -133,7 +132,7 @@ router.post('/login', (req, res, next) => {
     });
 });
 
-router.get('/logout', isLoggedIn, (req, res) => {
+router.get('/logout',  (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ errorMessage: err.message });

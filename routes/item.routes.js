@@ -15,5 +15,26 @@ router.post('/items', (req, res, next) => {
       .catch((err) => next(err));
   });
 
+  router.get('/Items', (req, res, next) => {
+    Item.find()
+      .populate('user')
+      .then((response) => res.json(response))
+      .catch((err) => res.json(err));
+  });
+
+router.get('/items/:itemId', (req, res, next) => {
+  const { itemId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(itemId)) {
+    res.status(400).json({ message: 'Specified Id is not valid' });
+    return;
+  }
+
+  Item.findById(itemId)
+    .populate('user')
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
 
   module.exports = router;
