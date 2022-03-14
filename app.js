@@ -26,11 +26,13 @@ const authRoutes = require('./routes/auth.routes');
 app.use('/auth', authRoutes);
 
 const itemRoutes = require('./routes/item.routes');
-app.use('/api', isAuthenticated,  itemRoutes);
+app.use('/api',  itemRoutes);
 
 const userRoutes = require('./routes/user.routes');
 app.use('/api', isAuthenticated, userRoutes);
 
+const commentRoutes = require('./routes/comments.routes');
+app.use('/api', isAuthenticated, commentRoutes);
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

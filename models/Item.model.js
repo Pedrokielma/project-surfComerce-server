@@ -6,9 +6,11 @@ const ItemSchema = new Schema({
   description: String,
   image: String,
   category: String,
+  price: String,
   // size: { type: Schema.Types.ObjectId,
   // },
-  user: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  comments:[{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 module.exports = model('Item', ItemSchema);

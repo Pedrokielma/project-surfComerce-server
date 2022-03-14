@@ -9,6 +9,7 @@ const userSchema = new Schema(
     },
     password: String,
     items:[{ type: Schema.Types.ObjectId, ref: 'Item' }],
+    // favitems:[{ type: Schema.Types.ObjectId, ref: 'Item' }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
