@@ -17,8 +17,8 @@ const { isAuthenticated } = require('../middleware/jwt.middleware');
   router.get('/myadds', isAuthenticated, (req, res, next) => {
   
       User.findById(req.payload._id)
-        .populate("items, favorites")
-        .then((response) => res.json(response.items))
+        .populate('items favitems')
+        .then((response) => res.json(response))
         .catch((err) => res.json(err));
     });
 
