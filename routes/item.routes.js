@@ -36,9 +36,10 @@ router.get('/items/:itemId', (req, res, next) => {
   }
 
   Item.findById(itemId)
-    .populate('user')
+    .populate('user comments')
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
+
 });
 
 

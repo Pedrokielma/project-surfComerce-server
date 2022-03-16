@@ -15,18 +15,24 @@ const { isAuthenticated } = require('../middleware/jwt.middleware');
 //       .catch((err) => res.json(err));
 //   });
 
-router.post('/comment', async (req, res, next) => {
+router.post('/items/:itemId', isAuthenticated, async (req, res, next) => {
     const { user, content } = req.body;
+    const { itemId } = req.params;
   
     const creator = await User.findById(user)
 
+    // const creator = User.findById(req.payload._id)
+    // .then((response) => res.json(response.items))
+    // .catch((err) => res.json(err));
+
     Comment.create({ user: creator, content })
     .then((newComment) => {
-        return Item.findByIdAndUpdate(user, { $push: { comments: newComment._id } }, { new: true });
+        return Item.findByIdAndUpdate( itemId, { $push: { comments: newComment._id } }, { new: true });
       })
       .then((response) => res.json(response))
       .catch((err) => next(err));
   });
+
 
 
 

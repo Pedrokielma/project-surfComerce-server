@@ -17,11 +17,24 @@ const { isAuthenticated } = require('../middleware/jwt.middleware');
   router.get('/myadds', isAuthenticated, (req, res, next) => {
   
       User.findById(req.payload._id)
-        .populate("items")
+        .populate("items, favorites")
         .then((response) => res.json(response.items))
         .catch((err) => res.json(err));
     });
 
+
+    router.put('/favorite/:itemId', async (req, res, next) => {
+      const { itemId } = req.params;
+  
+      Item.findByIdAndUpdate(itemId, req.body, { new: true })
+      .then((newItem) => {
+          return User.findByIdAndUpdate(req.payload._id, { $push: { favitems: newItem._id } }, { new: true });
+        })
+        .then((response) => res.json(response))
+        .catch((err) => next(err));
+    });
+
+    
   
 
 //   router.get('/items/:itemId', (req, res, next) => {
