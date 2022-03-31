@@ -7,6 +7,7 @@ const ItemSchema = new Schema({
   image: String,
   category: String,
   price: String,
+
   // size: { type: Schema.Types.ObjectId,
   // },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
