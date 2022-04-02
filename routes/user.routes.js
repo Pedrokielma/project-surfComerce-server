@@ -21,6 +21,7 @@ const { isAuthenticated } = require('../middleware/jwt.middleware');
         .then((response) => res.json(response))
         .catch((err) => res.json(err));
     });
+   
 
 
     router.put('/favorite/:itemId', async (req, res, next) => {

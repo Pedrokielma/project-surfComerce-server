@@ -25,7 +25,7 @@ router.post('/items', async (req, res, next) => {
       .catch((err) => res.json(err));
   });
 
-  
+
 
 router.get('/items/:itemId', (req, res, next) => {
   const { itemId } = req.params;
