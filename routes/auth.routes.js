@@ -5,6 +5,9 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
+
+const passport = require("../config/passport")
+
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
 
@@ -130,6 +133,7 @@ router.post('/login', (req, res, next) => {
     });
 });
 
+
 router.get('/logout',  (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -138,5 +142,43 @@ router.get('/logout',  (req, res) => {
     res.json({ message: 'Done' });
   });
 });
+
+
+
+
+//google login
+
+
+  router.get("/google", 
+    passport.authenticate("google", {
+      scope: [
+       "email",
+       "profile"
+      ]
+    })
+  )
+ 
+
+
+router.get("/google/callback", (req, res, next) => {
+
+  passport.authenticate("google", { scope: ["email"] }, (err, user, info) => {
+    if (err) return res.status(500).json({ err, info })
+    if (!user) return res.status(401).json({ err, info })
+    req.login(user, error => {
+        if (error) return res.status(401).json({ error })
+    res.status(200).json({ authToken })
+    return res.redirect("http://localhost:3000/profile")
+    
+        
+    })
+})(req, res, next)
+ 
+
+})
+
+
+
+
 
 module.exports = router;

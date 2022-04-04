@@ -1,3 +1,5 @@
+const morgan = require("morgan");
+
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
 require("dotenv/config");
@@ -10,6 +12,8 @@ require("./db");
 const express = require("express");
 
 const app = express();
+
+app.use(morgan("tiny"))
 
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
@@ -33,6 +37,7 @@ app.use('/api', isAuthenticated, userRoutes);
 
 const commentRoutes = require('./routes/comments.routes');
 app.use('/api', isAuthenticated, commentRoutes);
+
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
