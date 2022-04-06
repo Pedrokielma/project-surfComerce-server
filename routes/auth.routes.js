@@ -168,20 +168,24 @@ router.get("/google/callback", (req, res, next) => {
     req.login(user, error => {
         if (error) return res.status(401).json({ error })
 
-//login jwt (not working)
-        // const { _id, email } = user;
-        // const payload = { _id, email };
-        // const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-        //   algorithm: 'HS256',
-        //   expiresIn: '6h',
-        // });
-        // conosole.log("epa", res.status(200).json({ authToken }));
-//
+        console.log("epa", user)
 
-        // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
+        const { _id, email } = user;
+        const payload = { _id, email };
+        
+        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+          algorithm: 'HS256',
+          expiresIn: '6h',
+        });
+        
+
+
+        req.session.user = user._id;
+        
+        // ! better and safer but in this case we saving the entire user object
        
 
-        return res.redirect("http://localhost:3000/profile")
+       res.redirect(`http://localhost:3000/profile?token=${authToken}`)
     })
 })(req, res, next)
 })
