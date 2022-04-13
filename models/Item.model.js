@@ -7,6 +7,7 @@ const ItemSchema = new Schema({
   image: String,
   category: String,
   price: String,
+  // location: String,
 
   // size: { type: Schema.Types.ObjectId,
   // },
