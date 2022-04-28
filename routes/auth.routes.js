@@ -168,7 +168,7 @@ router.get("/google/callback", (req, res, next) => {
     req.login(user, error => {
         if (error) return res.status(401).json({ error })
 
-        console.log("epa", user)
+        
 
         const { _id, email } = user;
         const payload = { _id, email };
@@ -185,7 +185,7 @@ router.get("/google/callback", (req, res, next) => {
         // ! better and safer but in this case we saving the entire user object
        
 
-       res.redirect(`http://localhost:3000/profile?token=${authToken}`)
+       res.redirect(`http://localhost:3000?token=${authToken}`)
     })
 })(req, res, next)
 })
